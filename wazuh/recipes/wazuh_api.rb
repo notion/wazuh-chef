@@ -26,7 +26,7 @@ end
 package ['nodejs', 'wazuh-api']
 
 
-api_keys = Chef::EncryptedDataBagItem.load('wazuh_secrets', 'api')
+api_keys = node['ossec']['api_key']
 
 file "#{node['ossec']['dir']}/api/configuration/auth/user" do
   mode '0650'

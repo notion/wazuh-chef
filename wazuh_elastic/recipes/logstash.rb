@@ -20,14 +20,25 @@ template '01-ossec.conf' do
   source '01-ossec.conf.erb'
   owner 'root'
   group 'root'
-  # variables({
-  #   :elasticsearch_cluster_name => node['wazuh-elk']['elasticsearch_cluster_name'],
-  #   :elasticsearch_node_name => node['wazuh-elk']['elasticsearch_node_name']
-  # })
+  variables(
+    ssl_enabled: node['wazuh-elastic']['ssl_enabled']
+  )
   notifies :restart, 'service[logstash]', :delayed
 end
 
-ssl = Chef::EncryptedDataBagItem.load('wazuh_secrets', 'logstash_certificate')
+# template '01-wazuh-local.conf' do
+#   path '/etc/logstash/conf.d/01-wazuh-local.conf'
+#   source '01-wazuh-local.conf.erb'
+#   owner 'root'
+#   group 'root'
+#   # variables({
+#   #   :elasticsearch_cluster_name => node['wazuh-elk']['elasticsearch_cluster_name'],
+#   #   :elasticsearch_node_name => node['wazuh-elk']['elasticsearch_node_name']
+#   # })
+#   notifies :restart, 'service[logstash]', :delayed
+# end
+
+ssl = node['ossec']['logstash_cert']
 
 file '/etc/logstash/logstash.crt' do
   mode '0544'

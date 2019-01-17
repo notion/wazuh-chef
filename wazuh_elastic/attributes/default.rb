@@ -1,5 +1,7 @@
-default['wazuh-elastic']['elastic_stack_version'] = '6.2.3'
-default['wazuh-elastic']['wazuh_app_version'] = "3.2.1_6.2.3"
+default['wazuh-elastic']['ssl_enabled'] = false
+default['wazuh-elastic']['java_install'] = false
+default['wazuh-elastic']['elastic_stack_version'] = '6.5.4'
+default['wazuh-elastic']['wazuh_app_version'] = "3.7.2_6.5.4"
 default['wazuh-elastic']['elasticsearch_cluster_name'] = 'wazuh'
 default['wazuh-elastic']['elasticsearch_node_name'] = 'elk.wazuh-test.com'
 default['wazuh-elastic']['elasticsearch_port'] = 9200

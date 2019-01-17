@@ -1,13 +1,11 @@
 # Wazuh - Logstash configuration file
-## Remote Wazuh Manager - Filebeat input
+## Local Wazuh Manager - JSON file input
 input {
-    beats {
-        port => 5000
-        codec => "json_lines"
-        ssl => <%= node['filebeat']['ssl_enabled'] %>
-        ssl_certificate => "/etc/logstash/logstash.crt"
-        ssl_key => "/etc/logstash/logstash.key"
-    }
+   file {
+       type => "wazuh-alerts"
+       path => "/var/ossec/logs/alerts/alerts.json"
+       codec => "json"
+   }
 }
 filter {
     if [data][srcip] {
@@ -25,14 +23,14 @@ filter {
     geoip {
         source => "@src_ip"
         target => "GeoLocation"
-        fields => ["city_name", "continent_code", "country_code2", "country_name", "region_name", "location"]
+        fields => ["city_name", "country_name", "region_name", "location"]
     }
     date {
         match => ["timestamp", "ISO8601"]
         target => "@timestamp"
     }
     mutate {
-        remove_field => [ "timestamp", "beat", "input_type", "tags", "count", "@version", "log", "offset", "type","@src_ip"]
+        remove_field => [ "timestamp", "beat", "input_type", "tags", "count", "@version", "log", "offset", "type", "@src_ip", "host"]
     }
 }
 output {

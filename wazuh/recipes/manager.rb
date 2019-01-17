@@ -32,6 +32,7 @@ if node['ossec']['conf']['server']['cluster']['disabled'] == 'no'
       message "Wazuh cluster is not compatible with this version with #{node['platform']}"
       level :warn
     end
+    package ['python-setuptools', 'python-cryptography']
   when 'redhat', 'centos'
     if node['platform_version'].to_i == 7
       package ['python-setuptools', 'python-cryptography']

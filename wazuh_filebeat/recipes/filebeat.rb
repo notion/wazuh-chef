@@ -16,7 +16,7 @@ template node['filebeat']['config_path'] do
   notifies :restart, "service[#{node['filebeat']['service_name']}]"
 end
 
-ssl = Chef::EncryptedDataBagItem.load('wazuh_secrets', 'logstash_certificate')
+ssl = node['ossec']['logstash_cert']
 
 file '/etc/filebeat/logstash_certificate.crt' do
   mode '0544'

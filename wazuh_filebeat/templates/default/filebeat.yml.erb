@@ -13,6 +13,7 @@ output:
   logstash:
     # The Logstash hosts
     hosts: [<%= @servers.to_json %>]
+    ssl.enabled: <%= node['filebeat']['ssl_enabled'] %>
     ssl.certificate_authorities: <%= node['filebeat']['certificate_authorities'] %>
     ssl.certificate: <%= node['filebeat']['certificate'] %>
     ssl.key: <%= node['filebeat']['key'] %>

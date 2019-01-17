@@ -22,6 +22,12 @@ default['ossec']['server_role'] = 'ossec_server'
 default['ossec']['address'] = nil
 default['ossec']['ignore_failure'] = true
 
+default['ossec']['logstash_cert'] = ''
+default['ossec']['api_key'] = {
+  'htpasswd_user' => '',
+  'htpasswd_passcode' => ''
+}
+
 %w(local server).each do |type|
 
   # Manager global settings
@@ -287,7 +293,7 @@ default['ossec']['conf']['all']['localfile'] = [
   },
   {
     'content!' => {
-      'log_format' => 'syslog',
+      'log_format' => 'audit',
       'location' => '/var/log/audit/audit.log'
       }
   },
