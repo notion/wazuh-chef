@@ -48,8 +48,9 @@ ruby_block 'wait for elasticsearch' do
   end
 end
 
-bash 'Elasticsearch_template' do
-  code "cat #{Chef::Config['cookbook_path'][0]}/wazuh_elastic/files/default/elasticsearch_template.json | curl -XPUT 'http://localhost:9200/_template/wazuh' -H 'Content-Type: application/json' -d @-"
+execute 'Elasticsearch_template' do
+  command "cat #{Chef::Config['cookbook_path']}/wazuh_elastic/files/default/elasticsearch_template.json | curl -XPUT 'http://localhost:9200/_template/wazuh' -H 'Content-Type: application/json' -d @-"
+  action :run
 end
 
 service 'elasticsearch' do
