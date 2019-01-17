@@ -39,20 +39,17 @@ bash 'insert_line_limits.conf' do
   echo "elasticsearch - memlock unlimited" >> /etc/security/limits.conf
   EOH
   not_if "grep -q elasticsearch /etc/security/limits.conf"
-    notifies :restart, 'service[elasticsearch]', :immediately
+  notifies :restart, 'service[elasticsearch]', :immediately
 end
 
 ruby_block 'wait for elasticsearch' do
   block do
     loop { break if (TCPSocket.open("#{node['wazuh-elastic']['elasticsearch_ip']}",node['wazuh-elastic']['elasticsearch_port']) rescue nil); puts "Waiting elasticsearch...."; sleep 1 }
-end
+  end
 end
 
 bash 'Elasticsearch_template' do
-  code <<-EOH
-  cat #{Chef::Config['cookbook_path'][0]}/wazuh_elastic/files/default/elasticsearch_template.json | curl -XPUT 'http://localhost:9200/_template/wazuh' -H 'Content-Type: application/json' -d @-
-  EOH
-  not_if "curl -XGET 'http://#{node['wazuh-elastic']['elasticsearch_ip']}:#{node['wazuh-elastic']['elasticsearch_port']}/_template/wazuh' | grep wazuh-alerts"
+  code "cat #{Chef::Config['cookbook_path'][0]}/wazuh_elastic/files/default/elasticsearch_template.json | curl -XPUT 'http://localhost:9200/_template/wazuh' -H 'Content-Type: application/json' -d @-"
 end
 
 service 'elasticsearch' do
