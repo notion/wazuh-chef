@@ -50,7 +50,7 @@ end
 
 bash 'Elasticsearch_template' do
   code <<-EOH
-  curl https://raw.githubusercontent.com/wazuh/wazuh/3.0/extensions/elasticsearch/wazuh-elastic6-template-alerts.json | curl -XPUT 'http://localhost:9200/_template/wazuh' -H 'Content-Type: application/json' -d @-
+  cat #{Chef::Config['file_cache_path']}/cookbooks/wazuh_elastic/files/default/Elasticsearch_template.json | curl -XPUT 'http://localhost:9200/_template/wazuh' -H 'Content-Type: application/json' -d @-
   EOH
   not_if "curl -XGET 'http://#{node['wazuh-elastic']['elasticsearch_ip']}:#{node['wazuh-elastic']['elasticsearch_port']}/_template/wazuh' | grep wazuh"
 end
