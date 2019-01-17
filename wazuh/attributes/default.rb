@@ -137,8 +137,8 @@ default['ossec']['conf']['server']['command'] = [
 {
   'content!' => {
     'name' => 'route-null',
-    'executable' => 'disable-account.sh',
-   'expect' => 'srcip',
+    'executable' => 'route-null.sh',
+    'expect' => 'srcip',
     'timeout_allowed' => 'yes'
  }
 }
@@ -147,7 +147,7 @@ default['ossec']['conf']['server']['command'] = [
 # Active Response settings (Manager)
 default['ossec']['conf']['server']['active-response']['command'] = ['host-deny']
 default['ossec']['conf']['server']['active-response']['location'] = ['local']
-default['ossec']['conf']['server']['active-response']['level'] = ['6']
+default['ossec']['conf']['server']['active-response']['level'] = ['7']
 default['ossec']['conf']['server']['active-response']['timeout'] = ['1800']
 
 # Agent settings (agent)
