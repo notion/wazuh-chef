@@ -91,13 +91,15 @@ default['ossec']['api_key'] = {
     {
       'name' => 'slack',
       'level' => '9',
-      'hook_url' => node['ossec']['hook_url']
+      'hook_url' => node['ossec']['hook_url'],
+      'max_log' => 1024
     },
     {
       'content!' => {
         'name' => 'pagerduty',
         'level' => '11',
-        'api_key' => node['ossec']['pagerduty_key']
+        'api_key' => node['ossec']['pagerduty_key'],
+        'max_log' => 1024
      }
    }
   ]
