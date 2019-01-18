@@ -48,6 +48,13 @@ if node['ossec']['conf']['server']['cluster']['node_type'] == 'master'
     notifies :restart, "service[wazuh]", :delayed
   end
 end
+
+execute 'Enable Integratord' do
+  command '/var/ossec/bin/ossec-control enable integrator'
+  not_if "ps axu | grep ossec-integratord | grep -v grep"
+  notifies :restart, "service[wazuh]", :delayed
+end
+
 include_recipe 'wazuh::common'
 
 include_recipe 'wazuh::wazuh_api'
