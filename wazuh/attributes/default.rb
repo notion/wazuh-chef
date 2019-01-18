@@ -92,7 +92,8 @@ default['ossec']['api_key'] = {
       'name' => 'slack',
       'level' => '9',
       'hook_url' => node['ossec']['hook_url'],
-      'max_log' => 1024
+      'max_log' => 1024,
+      'alert_format' => 'json'
     },
     {
       'content!' => {
